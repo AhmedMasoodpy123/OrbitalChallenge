@@ -5,8 +5,8 @@ This project implements a lightweight API that calculates credit usage for the c
 # Running the API
 1. Create a virtual env
 python3/python -m venv venv
-source venev/bin/activate
-venv\Scripts\activate
+source venev/bin/activate (MacOS)
+venv\Scripts\activate (Windows)
 
 2. Install dependencies
 pip install -r requirements.txt
