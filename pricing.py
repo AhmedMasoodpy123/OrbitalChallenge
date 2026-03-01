@@ -8,21 +8,18 @@ def extract_words(text: str) -> list[str]:
     return ALL_WORDS.findall(text)
 
 def count_third_vowels(text: str) -> int:
-    """
-    Count occurences whre every 3rd character is a vowel.
-    """
     count = 0
     for i in range(2, len(text), 3):
-        if text(i) in VOWELS:
+        if text[i] in VOWELS:
             count += 1
-        return count
+    return count
     
 def ispalindrome(text: str) -> bool:
     # Step 1: Normalize the text
     cleaned = ""
     for c in text:
         if c.isalnum():
-            cleaned += c.lower
+            cleaned += c.lower()
 
     # Step 2: Empty strings shouldn't count    
     if cleaned == "":

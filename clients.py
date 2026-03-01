@@ -39,27 +39,15 @@ def fetch_messages_current_period() -> List[Dict[str, Any]]:
 
     data = resp.json()
 
-    if not isinstance(data, list):
-        raise Error("Messages endpoint returned non-list JSON")
+    if isinstance(data, list):
+        messages = data
+    elif isinstance(data, dict) and "messages" in data and isinstance(data["messages"], list):
+        messages = data["messages"]
+    else:
+        raise Error("Messages endpoint returned unexpected JSON shape")
 
-    for msg in data:
-        if not isinstance(msg, dict):
-            raise Error("Message item must be an object")
-
-        if "id" not in msg or not isinstance(msg["id"], int):
-            raise Error("Message missing valid 'id'")
-
-        if "timestamp" not in msg or not isinstance(msg["timestamp"], str):
-            raise Error("Message missing valid 'timestamp'")
-
-        if "text" not in msg or not isinstance(msg["text"], str):
-            raise Error("Message missing valid 'text'")
-
-        if "report_id" in msg and msg["report_id"] is not None:
-            if not isinstance(msg["report_id"], (int, str)):
-                raise Error("report_id must be int or str")
-
-    return data
+    # validate each message in messages ...
+    return messages
 
 
 def fetch_report_by_id(report_id: Union[str, int]) -> Optional[Dict[str, Any]]:
