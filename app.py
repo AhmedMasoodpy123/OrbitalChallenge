@@ -8,7 +8,7 @@ app = FastAPI()
 @app.get("/usage")
 def get_usage() -> Dict[str, Any]:
     try:
-        messages = fetch_messages_current_period
+        messages = fetch_messages_current_period()
     except Error as e:
         raise HTTPException(satus_code=502, detail=str(e))
     
