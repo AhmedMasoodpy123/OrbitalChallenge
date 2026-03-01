@@ -3,6 +3,8 @@ from fastapi import FastAPI, HTTPException
 from clients import Error, fetch_messages_current_period, fetch_report_by_id
 from pricing import calculate_text_credits
 
+app = FastAPI()
+
 @app.get("/usage")
 def get_usage() -> Dict[str, Any]:
     try:
@@ -27,7 +29,7 @@ def get_usage() -> Dict[str, Any]:
             if key not in report_cache:
                 try:
                     report_cache[key] = fetch_report_by_id(report_id)
-                except UpstreamError as e:
+                except Error as e:
                     raise HTTPException(status_code=502, detail=str(e))
             report = report_cache[key]
 
